@@ -1,45 +1,23 @@
-import { useState } from "react";
-import "./App.css";
-import Expenses from "./component/Expenses/Expenses";
-import NewExpense from "./component/NewExpense/NewExpense";
+
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+
+import Login from './component/Auth/Login'
+import Register from './component/Auth/Register'
+import Navigation from './pages/Navigation'
+
+const router = createBrowserRouter([
+  { path: '/', element: <Login /> }, {
+  path:'/register', element:<Register/>
+  },
+  {path:'/home',element:<Navigation/>}
+])
 
 function App() {
-  const DommyExpenses = [
-    {
-      id: "e1",
-      title: "Toilet Paper",
-      amount: 94.12,
-      date: new Date(2020, 7, 14),
-    },
-    { id: "e2", title: "New TV", amount: 799.49, date: new Date(2021, 2, 12) },
-    {
-      id: "e3",
-      title: "Car Insurance",
-      amount: 294.67,
-      date: new Date(2021, 2, 28),
-    },
-    {
-      id: "e4",
-      title: "New Desk (Wooden)",
-      amount: 450,
-      date: new Date(2021, 5, 12),
-    },
-  ];
-  const [expenses, setExpenses] = useState(DommyExpenses)
-
-  const addExpenseHandler = (expense) => {
-    
-    setExpenses(prevState => {
-      return [expense, ...prevState]
-    })
-    
-   
-  }
+  
   return (
-    <>
-      <NewExpense onAddExpense= {addExpenseHandler}></NewExpense>
-      <Expenses items={expenses}></Expenses>
-    </>
+      
+      <RouterProvider router={ router} />
+    
   );
 }
 
