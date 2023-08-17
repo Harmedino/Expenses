@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import "./Login.css";
 import { auth } from "../Firebase";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
@@ -65,7 +65,11 @@ function Login() {
             {isLoading ? "Logging in..." : "Login"}
           </button>
         </form>
+        <p className="login-link">
+          Don't have an account? <Link to="/register">Register</Link>
+        </p>
       </div>
+    
     </div>
   );
 }
