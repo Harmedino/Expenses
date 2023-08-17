@@ -34,11 +34,14 @@ function Navigation() {
   };
 
   return (
-      <div>
-          <Header></Header>
-      <NewExpense onAddExpense={addExpenseHandler} />
-      <Expenses items={expenses} />
-    </div>
+    <div>
+  <Header></Header>
+  <div style={{ marginTop: '70px' }}>
+    <NewExpense onAddExpense={addExpenseHandler} />
+    <Expenses items={expenses} />
+  </div>
+</div>
+
   );
 }
 
