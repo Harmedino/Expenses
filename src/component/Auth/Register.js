@@ -78,6 +78,7 @@ function RegisterPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
           <button
             className="submit-button"
             type="submit"
@@ -87,9 +88,9 @@ function RegisterPage() {
             {isLoading ? 'Registering...' : 'Register'}
           </button>
         </form>
-        {errorMessage && <div className="error-message">{errorMessage}</div>}
+       
         <p className="login-link">
-          Already have an account? <Link to="/login">Login</Link>
+          Already have an account? <Link to="/">Login</Link>
         </p>
       </div>
     </div>
