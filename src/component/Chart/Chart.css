@@ -12,6 +12,7 @@
     flex-wrap: nowrap; 
     position: relative;
     overflow-x: scroll;
+    overflow-y: hidden;
     
     
   }
