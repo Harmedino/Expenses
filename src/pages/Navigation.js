@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Expenses from "../component/Expenses/Expenses";
 import NewExpense from "../component/NewExpense/NewExpense";
-import Header from "../UI/Header"
+import Header from "../component/UI/Header";
 function Navigation() {
   const DommyExpenses = [
     {
@@ -34,11 +34,14 @@ function Navigation() {
   };
 
   return (
-      <div>
-          <Header></Header>
-      <NewExpense onAddExpense={addExpenseHandler} />
-      <Expenses items={expenses} />
-    </div>
+    <div>
+  <Header></Header>
+  <div style={{ marginTop: '70px' }}>
+    <NewExpense onAddExpense={addExpenseHandler} />
+    <Expenses items={expenses} />
+  </div>
+</div>
+
   );
 }
 
