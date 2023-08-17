@@ -5,11 +5,11 @@ import './Header.css';
 const Header = () => {
   return (
     <header className="header">
-      <Link to="/home" className="logo">Logo</Link> {/* Use Link component */}
+      <Link to="/home" className="logo">Expense</Link> 
       <nav className="nav">
         <ul>
-          <li><Link to="/">Login</Link></li> {/* Use Link component */}
-          <li><Link to="/register">Signup</Link></li> {/* Use Link component */}
+          <li><Link to="/">Login</Link></li> 
+          <li><Link to="/register">Signup</Link></li> 
           <li><button className="logout-btn">Logout</button></li>
         </ul>
       </nav>
