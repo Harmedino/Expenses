@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Expenses from "../component/Expenses/Expenses";
 import NewExpense from "../component/NewExpense/NewExpense";
-import Header from "../UI/Header"
+import Header from "../component/UI/Header";
 function Navigation() {
   const DommyExpenses = [
     {

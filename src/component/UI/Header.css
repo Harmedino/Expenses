@@ -6,10 +6,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #6A5ACD; /* Purple color */
+    background-color: #A892EE; /* Purple color */
     padding: 10px 20px;
     z-index: 1000;
     transition: background-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow */
   }
   
   .logo {
