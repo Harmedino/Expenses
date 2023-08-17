@@ -38,7 +38,7 @@ function RegisterPage() {
   };
 
   return (
-    <div className="register-page">
+    <div className="body">
       <div className="login">
         <h1>Register</h1>
         <form>

@@ -5,7 +5,6 @@
     box-sizing: border-box;
   }
   
-  /* Set the background color for the body */
   .body {
     display: flex;
     justify-content: center;
