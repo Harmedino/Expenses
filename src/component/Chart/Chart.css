@@ -1,21 +1,15 @@
-
 .chart {
-    padding: 1rem;
-    border-radius: 12px;
-    background-color: #f8dfff;
-    text-align: center;
-    display: flex;
-    justify-content: space-around;
-    height: 10rem;
-    max-width: 96%;
-    margin:auto;
-    flex-wrap: nowrap; 
-    position: relative;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    
-    
-  }
-
-
-  
+  padding: 1rem 1rem 2rem 1rem;
+  border-radius: 12px;
+  background-color: #f8dfff;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  height: 10rem;
+  width: 100%;
+  margin: auto;
+  flex-wrap: nowrap;
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
