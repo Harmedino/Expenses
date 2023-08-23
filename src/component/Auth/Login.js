@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from "firebase/auth";
 import "./Login.css";
 import { auth } from "../Firebase";
 import { Link, useNavigate } from "react-router-dom";
@@ -20,7 +20,7 @@ function Login() {
       console.log("Login successful");
       setIsLoading(false);
       setError(null); // Clear any previous error
-      navigate("/home");
+      navigate("/");
     } catch (error) {
       setIsLoading(false);
       setError(error.message);
@@ -69,7 +69,6 @@ function Login() {
           Don't have an account? <Link to="/register">Register</Link>
         </p>
       </div>
-    
     </div>
   );
 }

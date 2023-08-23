@@ -1,21 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import { onAuthStateChanged } from 'firebase/auth'
-import {auth} from '../Firebase'
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../Firebase";
 
-
-function AuthCheck() {
-    const [authUser,setAuthUser] = useState(null)
-    
-    useEffect(() => {
-        const listen = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                
-            }
-        })
-    },[])
-    return (
-        <div></div>
-    )
+export function AuthCheck() {
+  return new Promise((resolve, reject) => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        return resolve(user);
+      } else {
+        return resolve(null);
+      }
+    });
+  });
 }
 
-export default AuthCheck
+export function loader() {
+  return AuthCheck();
+}

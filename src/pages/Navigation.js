@@ -1,8 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Expenses from "../component/Expenses/Expenses";
 import NewExpense from "../component/NewExpense/NewExpense";
 import Header from "../component/UI/Header";
+import { useLoaderData, useSubmit } from "react-router-dom";
 function Navigation() {
+  const token = useLoaderData();
+  const submit = useSubmit();
+  console.log(token, "change");
+
+  useEffect(() => {
+    if (!token) {
+      return;
+    }
+    submit(null, { action: "/logout", method: "post" });
+  }, [submit, token]);
+
   const DommyExpenses = [
     {
       id: "e1",
@@ -35,13 +47,12 @@ function Navigation() {
 
   return (
     <div>
-  <Header></Header>
-  <div style={{ marginTop: '70px' }}>
-    <NewExpense onAddExpense={addExpenseHandler} />
-    <Expenses items={expenses} />
-  </div>
-</div>
-
+      <Header></Header>
+      <div style={{ marginTop: "70px" }}>
+        <NewExpense onAddExpense={addExpenseHandler} />
+        <Expenses items={expenses} />
+      </div>
+    </div>
   );
 }
 
