@@ -4,7 +4,13 @@ import NewExpense from "../component/NewExpense/NewExpense";
 import Header from "../component/UI/Header";
 import { useLoaderData } from "react-router-dom";
 import { firestore } from "../component/Firebase";
-import { updateDoc, doc, arrayUnion, getDocs } from "firebase/firestore";
+import {
+  updateDoc,
+  doc,
+  arrayUnion,
+  getDoc,
+  collection,
+} from "firebase/firestore";
 
 function Navigation() {
   const token = useLoaderData();
@@ -37,24 +43,36 @@ function Navigation() {
       date: new Date(2021, 5, 12),
     },
   ];
-
   const [expenses, setExpenses] = useState(DommyExpenses);
 
-  const addExpenseHandler = async (expense) => {
-    const data = await updateDoc(doc(firestore, "User", token.uid), {
-      expense: arrayUnion(expense),
+  // const addExpenseHandler = async (expense) => {
+  //   const data = await updateDoc(doc(firestore, "User", token.uid), {
+  //     expense: arrayUnion(expense),
 
-      getDocs(colRef).then((result) => {
-        loadingSpinner.style.display = "none";
-        result.forEach((user) => {
-          let id = user.id;
-          setExpenses({ id, ...user.data() });
-        });
-  
-  });
+  //     getDoc(collection(firestore, 'User',token.uid)).then((result) => {
+  //       loadingSpinner.style.display = "none";
+  //       result.forEach((user) => {
+  //         let id = user.id;
+  //         setExpenses({ id, ...user.data() });
+  //       });
+
+  // });
+  //   });
+
+  const addExpenseHandler = async (expense) => {
+    const userDocRef = doc(firestore, "User", token.uid);
+    const data = await updateDoc(userDocRef, {
+      expense: arrayUnion(expense),
     });
 
- 
+    const result = await getDoc(collection(firestore, "User", token.uid));
+    result.expense.forEach((user) => {
+      let id = user.id;
+      setExpenses({ id, ...user.data() });
+    });
+
+    console.log(expense);
+  };
 
   return (
     <div>
