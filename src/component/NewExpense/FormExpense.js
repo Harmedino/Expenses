@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import "./FormExpense.css";
-import ExpenseDate from "../Expenses/ExpenseDate";
+import { AuthCheck } from "../Auth/AuthCheck";
+import { redirect, useRouteLoaderData } from "react-router-dom";
 
 export const FormExpense = (props) => {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredAmount, setEnteredAmount] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
+
+  const token = useRouteLoaderData("root");
 
   //   const [userInput, setUserInput] = useState({
   //     enteredTitle: "",
@@ -38,13 +41,21 @@ export const FormExpense = (props) => {
   };
   const submit = (e) => {
     e.preventDefault();
+    if (!token) {
+      alert("you are required to login");
+      setEnteredTitle("");
+      setEnteredAmount("");
+      setEnteredDate("");
+      return redirect("/login");
+    }
+    console.log(token);
     const expenseData = {
       title: enteredTitle,
       amount: +enteredAmount,
       date: new Date(enteredDate),
     };
 
-    props.onSaveExpenseData(expenseData )
+    props.onSaveExpenseData(expenseData);
     // console.log(expenseDate);
     // console.log(...userInput);
     setEnteredTitle("");
@@ -56,12 +67,23 @@ export const FormExpense = (props) => {
       <div className="new-expense__controls">
         <div className=" new-expense__control">
           <label>Title</label>
-          <input type="text" onChange={titleChange} value={enteredTitle} />
+          <input
+            type="text"
+            onChange={titleChange}
+            value={enteredTitle}
+            required
+          />
         </div>
         <div className=" new-expense__control">
           <label>Amount</label>
-                  <input type="number" min="0.01" step="0.01" onChange={amountChange}
-          value={enteredAmount}        />
+          <input
+            type="number"
+            min="0.01"
+            step="0.01"
+            onChange={amountChange}
+            value={enteredAmount}
+            required
+          />
         </div>
         <div className=" new-expense__control">
           <label>Date </label>
@@ -71,6 +93,7 @@ export const FormExpense = (props) => {
             max="2023-12-31"
             onChange={dateChange}
             value={enteredDate}
+            required
           />
         </div>
       </div>

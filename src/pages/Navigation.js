@@ -2,18 +2,19 @@ import React, { useEffect, useState } from "react";
 import Expenses from "../component/Expenses/Expenses";
 import NewExpense from "../component/NewExpense/NewExpense";
 import Header from "../component/UI/Header";
-import { useLoaderData, useSubmit } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
+import { firestore } from "../component/Firebase";
+import { updateDoc, doc, arrayUnion, getDocs } from "firebase/firestore";
+
 function Navigation() {
   const token = useLoaderData();
-  const submit = useSubmit();
-  console.log(token, "change");
+  console.log(token.uid, "change");
 
   useEffect(() => {
     if (!token) {
       return;
     }
-    submit(null, { action: "/logout", method: "post" });
-  }, [submit, token]);
+  }, [token]);
 
   const DommyExpenses = [
     {
@@ -39,11 +40,21 @@ function Navigation() {
 
   const [expenses, setExpenses] = useState(DommyExpenses);
 
-  const addExpenseHandler = (expense) => {
-    setExpenses((prevState) => {
-      return [expense, ...prevState];
+  const addExpenseHandler = async (expense) => {
+    const data = await updateDoc(doc(firestore, "User", token.uid), {
+      expense: arrayUnion(expense),
+
+      getDocs(colRef).then((result) => {
+        loadingSpinner.style.display = "none";
+        result.forEach((user) => {
+          let id = user.id;
+          setExpenses({ id, ...user.data() });
+        });
+  
+  });
     });
-  };
+
+ 
 
   return (
     <div>

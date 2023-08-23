@@ -1,21 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { setDoc, doc } from "firebase/firestore";
+import { Firestore } from "firebase/firestore";
+import { useNavigate, Link } from "react-router-dom";
 import "./Login.css";
-import { auth } from '../Firebase';
+import { auth, firestore } from "../Firebase";
 
 function RegisterPage() {
   const history = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (errorMessage) {
       const timer = setTimeout(() => {
-        setErrorMessage('');
+        setErrorMessage("");
       }, 3000);
 
       return () => clearTimeout(timer);
@@ -27,10 +29,22 @@ function RegisterPage() {
 
     try {
       setIsLoading(true);
-      const result = await createUserWithEmailAndPassword(auth, email, password);
-      console.log(result);
-      setIsLoading(false);
-      history('/');
+      const result = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = result.user;
+      // console.log(result.user.uid);
+      if (user) {
+        const crendential = await setDoc(doc(firestore, "User", user.uid), {
+          username,
+          email,
+          expense: [],
+        });
+
+        history("/login");
+      }
     } catch (error) {
       setIsLoading(false);
       setErrorMessage(error.message);
@@ -85,12 +99,12 @@ function RegisterPage() {
             onClick={handleFormSubmit}
             disabled={isLoading}
           >
-            {isLoading ? 'Registering...' : 'Register'}
+            {isLoading ? "Registering..." : "Register"}
           </button>
         </form>
-       
+
         <p className="login-link">
-          Already have an account? <Link to="/">Login</Link>
+          Already have an account? <Link to="/login">Login</Link>
         </p>
       </div>
     </div>
