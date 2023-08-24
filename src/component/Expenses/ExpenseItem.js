@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./ExpenseItem.css";
 import ExpenseDate from "./ExpenseDate";
 import Card from "../UI/Card";
-import { doc, updateDoc, arrayRemove, getDoc } from "firebase/firestore";
+import { doc, updateDoc, arrayUnion, getDoc } from "firebase/firestore";
 import { firestore } from "../Firebase";
 import { useLoaderData } from "react-router-dom";
 
@@ -21,9 +21,11 @@ function ExpenseItem(props) {
   }
 
   async function handleDelete(element) {
-    console.log(expense);
+    const updatedArray = expense.filter((e) => e.id !== element.id);
 
-  const updatedArray = expense.filter((e)=> e.id !== element.id)
+    const data = await updateDoc(doc(firestore, "User", token.uid), {
+      expense: updatedArray,
+    });
     // try {
     //   await updateDoc(doc(firestore, "User", token.uid), {
     //     expense: arrayRemove(element),
