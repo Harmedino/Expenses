@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./FormExpense.css";
-import { AuthCheck } from "../Auth/AuthCheck";
 import { redirect, useRouteLoaderData } from "react-router-dom";
+import { Timestamp } from "firebase/firestore";
 
 export const FormExpense = (props) => {
   const [enteredTitle, setEnteredTitle] = useState("");
@@ -48,11 +48,18 @@ export const FormExpense = (props) => {
       setEnteredDate("");
       return redirect("/login");
     }
-    console.log(token);
+    const dateParts = enteredDate.split("-");
+    const year = parseInt(dateParts[0]);
+    const month = parseInt(dateParts[1]) - 1;
+    const day = parseInt(dateParts[2]);
+
+    const jsDate = new Date(year, month, day);
+    const firestoreTimestamp = Timestamp.fromDate(jsDate);
+
     const expenseData = {
       title: enteredTitle,
       amount: +enteredAmount,
-      date: new Date(enteredDate),
+      date: firestoreTimestamp,
     };
 
     props.onSaveExpenseData(expenseData);

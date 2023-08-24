@@ -4,7 +4,7 @@ import "./Header.css";
 
 const Header = () => {
   const token = useRouteLoaderData("root");
-  console.log(token);
+
   return (
     <header className="header">
       <Link to="/" className="logo">
