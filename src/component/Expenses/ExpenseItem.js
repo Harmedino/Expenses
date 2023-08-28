@@ -2,39 +2,16 @@ import React, { useEffect, useState } from "react";
 import "./ExpenseItem.css";
 import ExpenseDate from "./ExpenseDate";
 import Card from "../UI/Card";
-import { doc, updateDoc, arrayUnion, getDoc } from "firebase/firestore";
-import { firestore } from "../Firebase";
 import { useLoaderData } from "react-router-dom";
+import { deleteExpense } from "../../store/expense-actions";
+import { useDispatch } from "react-redux";
 
 function ExpenseItem(props) {
   const token = useLoaderData();
-  const [expense, setExpense] = useState();
-
-  useEffect(() => {
-    getExpense();
-  }, []);
-
-  async function getExpense() {
-    const result = await getDoc(doc(firestore, "User", token.uid));
-    const userData = await result.data();
-    setExpense(userData.expense);
-  }
+  const dispatch = useDispatch();
 
   async function handleDelete(element) {
-    const updatedArray = expense.filter((e) => e.id !== element.id);
-
-    const data = await updateDoc(doc(firestore, "User", token.uid), {
-      expense: updatedArray,
-    });
-    // try {
-    //   await updateDoc(doc(firestore, "User", token.uid), {
-    //     expense: arrayRemove(element),
-    //   });
-
-    //   console.log("item deleted");
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    dispatch(deleteExpense(element, token));
   }
   return (
     <Card className="expense-item">
