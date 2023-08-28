@@ -40,7 +40,7 @@ function RegisterPage() {
         const crendential = await setDoc(doc(firestore, "User", user.uid), {
           username,
           email,
-          expense: [],
+          expenses: [],
         });
 
         history("/login");
