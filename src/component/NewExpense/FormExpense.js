@@ -47,19 +47,14 @@ export const FormExpense = (props) => {
       setEnteredAmount("");
       setEnteredDate("");
       return redirect("/login");
-    }
-    const dateParts = enteredDate.split("-");
-    const year = parseInt(dateParts[0]);
-    const month = parseInt(dateParts[1]) - 1;
-    const day = parseInt(dateParts[2]);
-
-    const jsDate = new Date(year, month, day);
-    const firestoreTimestamp = Timestamp.fromDate(jsDate);
-
+    } 
+    // const [year, month, day] = enteredDate.split("-"); 
+    // const expenseDate = new Date(year, month - 1, day);
+  
     const expenseData = {
       title: enteredTitle,
       amount: +enteredAmount,
-      date: firestoreTimestamp,
+      date: enteredDate
     };
 
     props.onSaveExpenseData(expenseData);
