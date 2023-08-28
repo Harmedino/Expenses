@@ -3,10 +3,11 @@ import ExpenseItem from "./ExpenseItem";
 import "./ExpensesList.css";
 
 export const ExpensesList = (props) => {
-  let expensesContent = (
-    <h2 className="expenses-list__fallback">No expenses found</h2>
-  );
-  if (props.items.length > 0) {
+  let expensesContent = <h2 className="expenses-list__fallback">No expenses found</h2>;
+
+  if (props.isLoading) {
+    expensesContent = <p>Loading...</p>; // You can use a loading spinner or other UI here
+  } else if (props.items.length > 0) {
     expensesContent = props.items.map((element) => (
       <ExpenseItem
         key={element.id}
@@ -17,6 +18,7 @@ export const ExpensesList = (props) => {
       />
     ));
   }
+
   return (
     <div>
       <ul className="expenses-list">{expensesContent}</ul>
